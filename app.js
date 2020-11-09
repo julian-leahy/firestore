@@ -46,6 +46,22 @@ const outputSpecificUser = (field, condition, value) => {
     })
 }
 
+/**
+ * Listen to DB in Real Time
+ */
+const realTimeDB = () => {
+    db.collection('users').onSnapshot(snapshot => {
+        snapshot.docChanges().forEach(change => {
+            if (change.type == 'added') {
+                generateUserList(change.doc);
+            } else if (change.type == 'removed') {
+                const li = userList.querySelector(`[data-id = ${change.doc.id}]`);
+                userList.removeChild(li);
+            }
+        })
+    })
+}
+
 const generateUserList = (doc => {
     const li = document.createElement('li');
     const name = document.createElement('span');
@@ -75,7 +91,8 @@ const generateUserList = (doc => {
 // TEST
 
 //outputUsers();
-outputSpecificUser('name', '==', 'user1');
+//outputSpecificUser('name', '==', 'user1');
+realTimeDB();
 
 
 
