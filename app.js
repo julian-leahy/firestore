@@ -32,6 +32,20 @@ const outputUsers = () => {
     })
 }
 
+/**
+ * Return a specific document
+ * @param {string} field 
+ * @param {sting} condition 
+ * @param {string} value 
+ */
+const outputSpecificUser = (field, condition, value) => {
+    db.collection('users').where(field, condition, value).get().then(snapshot => {
+        snapshot.docs.forEach(doc => {
+            generateUserList(doc);
+        });
+    })
+}
+
 const generateUserList = (doc => {
     const li = document.createElement('li');
     const name = document.createElement('span');
@@ -60,7 +74,8 @@ const generateUserList = (doc => {
 
 // TEST
 
-outputUsers();
+//outputUsers();
+outputSpecificUser('name', '==', 'user1');
 
 
 
