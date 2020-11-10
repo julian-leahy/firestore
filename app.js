@@ -87,6 +87,10 @@ const generateUserList = (doc => {
     })
 })
 
+// We can also use update or set method on a document
+// update: we can update an individual field
+// set: will override all fields so we need to specify each one
+
 
 // TEST
 
